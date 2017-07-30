@@ -185,10 +185,38 @@ const foldl = z => f => a => {
 };
 
 
+//- Calculates the sum of all the elmenets within an array.
+//= sum :: Array Num -> Num
+sum = ns =>
+    foldl(0)(acc => i => acc + i)(ns);
+assumptionEqual(0, sum([]));
+assumptionEqual(6, sum([1, 2, 3]));
+
+
+//- Removes the first `n` elements from the front of the passed array.
+//= drop :: Int -> Array a -> Array a
+drop = n => a =>
+    slice(n)(length(a))(a);
+assumptionEqual([], drop(1)([1]));
+assumptionEqual([2, 3, 4], drop(1)([1, 2, 3, 4]));
+assumptionEqual([3, 4], drop(2)([1, 2, 3, 4]));
+
+
+//- Returns an array containing all elements that satisfy the passed predicate.
+//= any :: (a -> Bool) -> Array a -> Array a
+any = p => a =>
+    a.some(p);
+assumption(!any(x => x < 0)([1, 2, 3, 4]));
+assumption(any(x => x < 0)([1, 2, -3, 4]));
+
+
+
 module.exports = {
+    any,
     append,
     at,
     concat,
+    drop,
     filter,
     findMap,
     foldl,
@@ -200,5 +228,6 @@ module.exports = {
     reduce,
     slice,
     sort,
+    sum,
     zipWith
 };
